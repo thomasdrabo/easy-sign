@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "856209743542",
+    "project_id": "cryptosign-2e67a",
+    "storage_bucket": "cryptosign-2e67a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:856209743542:android:2cc27e7f270638f66c9017",
+        "android_client_info": {
+          "package_name": "com.easysign.easy_sign"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "856209743542-kgee5vpb6f3rr0lv0vi5ee6cn0m31b23.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBJv9mHK4fevEEbH7J0MqVyYXuA4kRwRd4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "856209743542-kgee5vpb6f3rr0lv0vi5ee6cn0m31b23.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
