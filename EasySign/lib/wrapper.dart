@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:easy_sign/pages/authentification/login.dart';
 import 'package:easy_sign/pages/home.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -29,8 +30,8 @@ class _WrapperState extends State<Wrapper> {
 
     // return either Home or Authenticate widget
     if (auth.currentUser ==  null) {
-      //return Login();
-      return Home();
+      return Login();
+      //return Home();
     } else {
       return Home();
     }

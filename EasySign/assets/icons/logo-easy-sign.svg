@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" id="Calque_1" data-name="Calque 1" viewBox="0 0 433.7 400.7">
+  <defs>
+    <style>
+      .cls-4{font-size:150px;fill:#ad8b72;font-family:SavoyeLetPlain,Savoye LET}
+    </style>
+  </defs>
+  <rect width="430.7" height="397.73" x="1.5" y="1.5" fill="#e3caa5" stroke="#ad8b72" stroke-miterlimit="10" stroke-width="3" opacity=".8" rx="30"/>
+  <path fill="#fff" d="m124.6 307.2-10.7 10.7-27.1-27.1 10.7-10.7Zm-45.9-24.5 5.3 5.4 10.7-10.8-4.6-4.5a4.6 4.6 0 0 0-6.7 0l-4.7 4.8a3.5 3.5 0 0 0 0 5.1Zm48.8 27.4-10.7 10.7 11.9 2.9a1.2 1.2 0 0 0 1.5-1.4Z"/>
+  <path fill="#1d1d1b" stroke="#fff" stroke-miterlimit="10" stroke-width="5" d="M74.3 191.8h120m71.6 0h120"/>
+  <text class="cls-4" transform="translate(67.4 172)">Easy</text>
+  <text class="cls-4" transform="translate(183.2 271.1)">Sign</text>
+  <path fill="none" stroke="#ad8b72" stroke-miterlimit="10" stroke-width="3" d="M354.7 270a21.6 21.6 0 0 1 8.7-7.1c1.9-.9 8.4-3.8 15.1-.6s8.8 10.7 9 11.4c1.6 7.2-2.4 13.4-7.1 20.5a73.1 73.1 0 0 1-21.9 22.1c-3.5 2.3-14.9 9.5-36 12.8-16.5 2.6-29.6 1.7-50.8-.9-33.3-4.2-45-7.2-60.4-9.2-18.5-2.4-46-3.7-81.2 2.9"/>
+</svg>
