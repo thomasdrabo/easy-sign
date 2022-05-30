@@ -124,17 +124,10 @@ class _RegisterState extends State<Register> {
                           "deviceToken": value,
                           "firstName": "User",
                           "uid": uid,
-                          "interest": null,
-                          "isPublic": true,
                           "lastName": Random().nextInt(10000).toString(),
                           "pdp": "https://firebasestorage.googleapis.com/v0/b/cryptosign-2e67a.appspot.com/o/default-pdp%2Flogo%20easy%20sign.jpg?alt=media&token=9c4928e6-6979-46f3-ab18-10138383254a",
                           "pseudo": pseudoController.text,
-                          "type": 'Free',
                           "searchKeywords" : searchKeywords,
-                          "swipeCity" : null,
-                          "swipeInterest" : null,
-                          "swipeRange" : 12.0,
-                          "swipeType" : 'Tout',
                         });
 
                         Navigator.pushReplacement(
@@ -204,17 +197,10 @@ class _RegisterState extends State<Register> {
                             "deviceToken": value,
                             "firstName": "User",
                             "uid": uid,
-                            "interest": null,
-                            "isPublic": true,
                             "lastName": Random().nextInt(10000).toString(),
                             "pdp": image,
                             "pseudo": null,
-                            "type": 'Free',
                             "searchKeywords" : null,
-                            "swipeCity" : null,
-                            "swipeInterest" : null,
-                            "swipeRange" : 12.0,
-                            "swipeType" : 'Tout',
                           });
                           Navigator.push(
                             context,
@@ -281,17 +267,10 @@ class _RegisterState extends State<Register> {
                           "deviceToken": value,
                           "firstName": "User",
                           "uid": uid,
-                          "interest": null,
-                          "isPublic": true,
                           "lastName": Random().nextInt(10000).toString(),
                           "pdp": "https://firebasestorage.googleapis.com/v0/b/cryptosign-2e67a.appspot.com/o/default-pdp%2Flogo%20easy%20sign.jpg?alt=media&token=9c4928e6-6979-46f3-ab18-10138383254a",
                           "pseudo": null,
-                          "type": 'Free',
                           "searchKeywords": null,
-                          "swipeCity": null,
-                          "swipeInterest": null,
-                          "swipeRange": 12.0,
-                          "swipeType": 'Tout',
                         });
                         Navigator.push(
                           context,
