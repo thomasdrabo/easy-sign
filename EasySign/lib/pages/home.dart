@@ -5,7 +5,7 @@ import 'package:easy_sign/pages/page1.dart';
 import 'package:easy_sign/pages/page2.dart';
 import 'package:easy_sign/pages/page3.dart';
 import 'package:easy_sign/pages/page4.dart';
-import 'package:easy_sign/pages/page5.dart';
+import 'package:easy_sign/pages/profile.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -142,7 +142,7 @@ class _HomeState extends State<Home> {
                             onTap: () {
                               setState(() {
                                 indexNav = 4;
-                                display = const Page5();
+                                display = const Profile();
                               });
                             },
                             child: indexNav == 4 ? const Icon(Icons.person, color: Colors.black,)  : const Icon(Icons.person, color: Colors.grey,),
