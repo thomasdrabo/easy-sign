@@ -39,12 +39,12 @@ Future<String?> signInWithGoogle() async {
 
 class AuthService {
   // create user obj based on FirebaseUser
-  User1? _userFromFirebaseUser(User user) {
-    return user != null ? User1(uid: user.uid) : null;
+  UserModel? _userFromFirebaseUser(User user) {
+    return user != null ? UserModel(uid: user.uid) : null;
   }
 
   // auth change user stream
-  Stream<User1> get user {
+  Stream<UserModel> get user {
     return _auth.authStateChanges().map((User? user) => _userFromFirebaseUser(user!)!);
   }
 
