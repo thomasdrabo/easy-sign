@@ -20,29 +20,18 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
 
-  int indexNav = 0;
+  int indexNav = 1;
   late Widget display = const Page1();
   final firestoreInstance = FirebaseFirestore.instance;
   final FirebaseAuth auth = FirebaseAuth.instance;
-  var user;
 
 
-  //Variable servant à savoir si c'est un compte privé individuel (0), ou bien un compte rattaché à une entreprise, club etc... (1)
-  int accountType = 1;
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    setState(()  {
-      // firestoreInstance.collection('users').doc(auth.currentUser!.uid).get().then((value) {
-      //   setState(() {
-      //     user = value.data();
-      //   });
-      // });
-      //print(user.data());
-    });
-    super.initState();
-  }
+  // @override
+  // void initState() {
+  //   // TODO: implement initState
+  //
+  //   super.initState();
+  // }
 
   // void updateUser(var usr){
   //   setState(() {
@@ -74,30 +63,6 @@ class _HomeState extends State<Home> {
                 child: Stack(
                   clipBehavior: Clip.none,
                   children: [
-                    AnimatedPositioned(
-                      top: indexNav == 2 ? 15 : -30,
-                      left: indexNav == 2 ? MediaQuery.of(context).size.width / 2 - 26 : MediaQuery.of(context).size.width / 2 - 35,
-                      duration: const Duration(milliseconds: 150),
-                      child: InkWell(
-                        onTap: () {
-                          setState(() {
-                            indexNav = 2;
-                            display = const Page3();
-                          });
-                        },
-                        child: AnimatedContainer(
-                          width: indexNav == 2 ? 52 : 70,
-                          height: indexNav == 2 ? 52 : 70,
-                          child: AnimatedSize(
-                              curve: Curves.easeIn,
-                              duration: const Duration(milliseconds: 150),
-                              child: Icon(Icons.favorite, color: Colors.white, size: indexNav == 2 ? 25 : 40,)),
-                          decoration: const BoxDecoration(
-                              shape: BoxShape.circle,
-                              gradient: const LinearGradient(colors: [Color(0xFF53A3FF), Color(0xFFE99FFA)])), duration: const Duration(milliseconds: 150),
-                        ),
-                      ),
-                    ),
                     Container(
                       width: MediaQuery.of(context).size.width,
                       height: 80,
@@ -108,44 +73,32 @@ class _HomeState extends State<Home> {
                             onTap: () {
                               setState(() {
                                 indexNav = 0;
-                                display = const Page1();
+                                display =  Profile();
                               });
                             },
                             child: Container(
-                              child: indexNav == 0 ? const Icon(Icons.home_outlined, color: Colors.black,) :  const Icon(Icons.home_outlined, color: Colors.grey),
+                              child: Icon(Icons.person, color: indexNav == 0 ? Colors.black : Colors.grey,),
                             ),
                           ),
                           InkWell(
                             onTap: () {
                               setState(() {
                                 indexNav = 1;
+                                display = const Page1();
+                              });
+                            },
+                            child: Container(
+                              child:Icon(Icons.home_outlined, color: indexNav == 1 ? Colors.black : Colors.grey,),
+                            ),
+                          ),
+                          InkWell(
+                            onTap: () {
+                              setState(() {
+                                indexNav = 2;
                                 display = const Page2();
                               });
                             },
-                            child: Container(
-                              child: indexNav == 1 ? const Icon(Icons.search_outlined, color: Colors.black,)  : const Icon(Icons.search_outlined, color: Colors.grey,),
-                            ),
-                          ),
-                          const SizedBox(width: 50,),
-                          InkWell(
-                            onTap: () {
-                              setState(() {
-                                indexNav = 3;
-                                display = const Page4();
-                              });
-                            },
-                            child: Container(
-                              child: indexNav == 3 ? const Icon(Icons.notifications, color: Colors.black,)  : const Icon(Icons.notifications, color: Colors.grey,),
-                            ),
-                          ),
-                          InkWell(
-                            onTap: () {
-                              setState(() {
-                                indexNav = 4;
-                                display = const Profile();
-                              });
-                            },
-                            child: indexNav == 4 ? const Icon(Icons.person, color: Colors.black,)  : const Icon(Icons.person, color: Colors.grey,),
+                            child: Icon(Icons.settings, color: indexNav == 2 ? Colors.black : Colors.grey,),
                           ),
                         ],
                       ),
