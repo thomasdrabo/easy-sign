@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet href="certif.xsl" type="text/xsl"?>
+<document>
+   <parametres>
+		<identifiant-du-document>56895</identifiant-du-document>
+		<nom-intervention>Controle salle de cours</nom-intervention>
+		<horodatage>31/08/2010 22:01:07</horodatage>
+		<nombre-intervention>5</nombre-intervention>
+		<nombre-intervenant>5</nombre-intervenant>
+   </parametres>
+   <interventions>
+		<intervention id="1">
+			<nom>Controle des prises élecriques</nom>
+			<intervenant>Jean Eude</intervenant>
+			<poste>Electricien</poste>
+			<etape id="1">
+				<nom>Check tension</nom>
+				<etat>0</etat>
+			</etape>
+			<etape id="1">
+				<nom>Check intégrité prise</nom>
+				<etat>0</etat>
+			</etape>
+			<signature>
+				<id>54654</id>
+			</signature>
+		</intervention>
+		<intervention id="2">
+			<nom>Controle des prises ethernet</nom>
+			<intervenant>Jean Eude</intervenant>
+			<poste>Electricien</poste>
+			<etape id ="1">
+				<nom>Check débit</nom>
+				<etat>0</etat>
+			</etape>
+			<etape id="2">
+				<nom>Check intégrité prise</nom>
+				<etat>0</etat>
+			</etape>
+			<signature>
+				<id>687321</id>
+			</signature>
+		</intervention>
+		<intervention id="3">
+			<nom>Controle de l'isolation</nom>
+			<intervenant>Eric Aymorty</intervenant>
+			<poste>Technicien isolation</poste>
+			<etape id="1">
+				<nom>Check isolation mur</nom>
+				<etat>0</etat>
+			</etape>
+			<etape id="2">
+				<nom>Check intégrité prise</nom>
+				<etat>0</etat>
+			</etape>
+			<signature>
+				<id>54654</id>
+			</signature>
+		</intervention>    
+   </interventions>
+</document>

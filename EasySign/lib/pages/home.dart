@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:easy_sign/pages/bluetooth/discovery.dart';
 import 'package:easy_sign/pages/page1.dart';
 import 'package:easy_sign/pages/page2.dart';
 import 'package:easy_sign/pages/page3.dart';
@@ -9,6 +10,8 @@ import 'package:easy_sign/pages/page5.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
+import 'bluetooth/deviceList.dart';
 
 
 class Home extends StatefulWidget {
@@ -131,7 +134,7 @@ class _HomeState extends State<Home> {
                             onTap: () {
                               setState(() {
                                 indexNav = 3;
-                                display = const Page4();
+                                display = const DiscoveryPage();
                               });
                             },
                             child: Container(
