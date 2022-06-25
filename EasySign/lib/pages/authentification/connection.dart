@@ -18,9 +18,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
 import '../../widgets/buttons/ui_gradient_button.dart';
-import 'fill_profile.dart';
-
-
+import 'fill_profile_sociétés.dart';
 
 class Connection extends StatefulWidget {
   const Connection({Key? key}) : super(key: key);
@@ -30,7 +28,6 @@ class Connection extends StatefulWidget {
 }
 
 class _ConnectionState extends State<Connection> {
-
   //Instance firebase
   final firestoreInstance = FirebaseFirestore.instance;
   final FirebaseAuth auth = FirebaseAuth.instance;
@@ -43,7 +40,6 @@ class _ConnectionState extends State<Connection> {
 
   //Message d'erreur
   String errorMessage = '';
-
 
   @override
   Widget build(BuildContext context) {
@@ -58,49 +54,64 @@ class _ConnectionState extends State<Connection> {
           Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              Text("Bienvenue sur Easy-sign,", style: GoogleFonts.montserrat(
-                textStyle: TextStyle(
-                  fontWeight: FontWeight.w500,
-                  color: Colors.black,
-                  fontSize: 22,
+              Text(
+                "Bienvenue sur Easy-sign,",
+                style: GoogleFonts.montserrat(
+                  textStyle: TextStyle(
+                    fontWeight: FontWeight.w500,
+                    color: Colors.black,
+                    fontSize: 22,
+                  ),
                 ),
-              ),),
+              ),
             ],
           ),
-          SizedBox(height: 15,),
+          SizedBox(
+            height: 15,
+          ),
           Container(
-            height: 50,
-              child: UI_simple_textfield(controller: mailController, labelText: "E-mail",)),
-          SizedBox(height: 15,),
+              height: 50,
+              child: UI_simple_textfield(
+                controller: mailController,
+                labelText: "E-mail",
+              )),
+          SizedBox(
+            height: 15,
+          ),
           Container(
-            height: 50,
-              child: UI_simple_textfield(controller: passwordController, labelText: "Mot de passe", obscureText: true,)),
+              height: 50,
+              child: UI_simple_textfield(
+                controller: passwordController,
+                labelText: "Mot de passe",
+                obscureText: true,
+              )),
           Padding(
             padding: const EdgeInsets.only(top: 16.0),
             child: Visibility(
                 visible: errorMessage != '',
-                child: Text(errorMessage, style: const TextStyle(color: Colors.red),)
-            ),
+                child: Text(
+                  errorMessage,
+                  style: const TextStyle(color: Colors.red),
+                )),
           ),
-
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 25),
-            child: UI_gradient_button(title: "Se connecter", onPressed: () async {
-              final status = await FirebaseAuthHelper().login(
-                  email: mailController.text, pass: passwordController.text);
-              if (status == AuthResultStatus.successful) {
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(builder: (context) => const Home()),
-                );
-              } else {
-                final errorMsg = AuthExceptionHandler.generateExceptionMessage(
-                    status);
-                setState(() {
-                  errorMessage = errorMsg;
-                });
-              }
-            }),
+            child: UI_gradient_button(
+                title: "Se connecter",
+                onPressed: () async {
+                  final status = await FirebaseAuthHelper().login(email: mailController.text, pass: passwordController.text);
+                  if (status == AuthResultStatus.successful) {
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(builder: (context) => const Home()),
+                    );
+                  } else {
+                    final errorMsg = AuthExceptionHandler.generateExceptionMessage(status);
+                    setState(() {
+                      errorMessage = errorMsg;
+                    });
+                  }
+                }),
           ),
           InkWell(
             onTap: () {
@@ -109,140 +120,17 @@ class _ConnectionState extends State<Connection> {
                 MaterialPageRoute(builder: (context) => ForgetPassword()),
               );
             },
-            child: Text("Mot de passe oublié ?", style: GoogleFonts.montserrat(
-              textStyle: TextStyle(
-                fontWeight: FontWeight.w400,
-                color: Colors.black,
-                fontSize: 14,
+            child: Text(
+              "Mot de passe oublié ?",
+              style: GoogleFonts.montserrat(
+                textStyle: TextStyle(
+                  fontWeight: FontWeight.w400,
+                  color: Colors.black,
+                  fontSize: 14,
+                ),
               ),
-            ),),
+            ),
           ),
-
-          SizedBox(height: 40,),
-          UI_rounded_icon_button(title: "Continuer avec Google", onPressed: () {
-            signInWithGoogle().then((result) {
-              if (result != null) {
-                var resultSplitForUid =
-                result.split(" ");
-                var uid = resultSplitForUid[
-                resultSplitForUid.length -
-                    1]
-                    .substring(
-                    0,
-                    resultSplitForUid[
-                    resultSplitForUid
-                        .length -
-                        1]
-                        .length -
-                        1);
-                firestoreInstance
-                    .collection("users")
-                    .doc(uid)
-                    .get()
-                    .then((value) {
-                  if (value.data() == null) {
-                    var resultSplitForVar =
-                    result.split(",");
-                    var uid = auth.currentUser!.uid;
-                    var date = DateTime.now().toString();
-                    var image = resultSplitForVar[7].split(": ")[1];
-                    FirebaseMessaging messaging = FirebaseMessaging.instance;
-                    messaging.getToken().then((value) {
-                      firestoreInstance
-                          .collection('users')
-                          .doc(uid)
-                          .set({
-                        "accountCreationDate": date,
-                        "birthday": null,
-                        "city": null,
-                        "description" : "Salut, je suis nouveau sur l'application ! ✌️",
-                        "deviceToken": value,
-                        "firstName": "User",
-                        "id": uid,
-                        "lastName": Random().nextInt(10000).toString(),
-                        "pdp": image,
-                        "pseudo": null,
-                        "searchKeywords" : null,
-                      });
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => FillProfile(googleOrApple : true, googleImg: image,)),
-                      );
-                    });
-                  } else {
-                    Navigator.of(context).pushReplacement(MaterialPageRoute(
-                        builder: (context) => const Home()));
-                  }
-                });
-              }
-            });
-          }, icon: "assets/icons/iconGoogle.svg"),
-          SizedBox(height: 20,),
-          UI_rounded_icon_button(title: "Continuer avec Apple", onPressed: () async {
-            final appleIdCredential =
-                await SignInWithApple
-                .getAppleIDCredential(
-              scopes: [
-                AppleIDAuthorizationScopes.email,
-                AppleIDAuthorizationScopes
-                    .fullName,
-              ],
-            );
-            final oAuthProvider =
-            OAuthProvider('apple.com');
-            final credential =
-            oAuthProvider.credential(
-              idToken:
-              appleIdCredential.identityToken,
-              accessToken: appleIdCredential
-                  .authorizationCode,
-            );
-            await FirebaseAuth.instance
-                .signInWithCredential(credential)
-                .then((result) {
-              if (result != null) {
-                var uid = result.user!.uid;
-                firestoreInstance
-                    .collection("users")
-                    .doc(uid)
-                    .get()
-                    .then((value) {
-                  if (value.data() == null) {
-                    var date =
-                    DateTime.now().toString();
-                    FirebaseMessaging messaging = FirebaseMessaging.instance;
-                    messaging.getToken().then((value) {
-                      firestoreInstance
-                          .collection('users')
-                          .doc(uid)
-                          .set({
-                        "accountCreationDate": date,
-                        "birthday": null,
-                        "city": null,
-                        "description": "Salut, je suis nouveau sur l'application ! ✌️",
-                        "deviceToken": value,
-                        "firstName": "User",
-                        "uid": uid,
-                        "lastName": Random().nextInt(10000).toString(),
-                        "pdp": "https://firebasestorage.googleapis.com/v0/b/cryptosign-2e67a.appspot.com/o/default-pdp%2Flogo%20easy%20sign.jpg?alt=media&token=9c4928e6-6979-46f3-ab18-10138383254a",
-                        "pseudo": null,
-                        "searchKeywords": null,
-                      });
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => FillProfile(googleOrApple : true,)),
-                      );
-                    });
-                  } else {
-                    Navigator.of(context).pushReplacement(MaterialPageRoute(
-                        builder: (context) => const Home()));
-                  }
-                });
-              }
-            });
-          }, icon: "assets/icons/appleIcon.svg")
         ],
       ),
     );

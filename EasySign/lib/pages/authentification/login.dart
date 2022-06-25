@@ -1,5 +1,5 @@
 import 'package:easy_sign/pages/authentification/connection.dart';
-import 'package:easy_sign/pages/authentification/register.dart';
+import 'package:easy_sign/pages/authentification/registerSoci%C3%A9t%C3%A9s.dart';
 import 'package:easy_sign/widgets/bars/ui_switch_bar.dart';
 import 'package:flutter/material.dart';
 
@@ -42,7 +42,7 @@ class _LoginState extends State<Login> {
                     ),
                     Column(
                       children: [
-                        Register(),
+                        RegisterSocietes(),
                       ],
                     )
                   ],
