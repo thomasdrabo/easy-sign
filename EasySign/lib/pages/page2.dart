@@ -1,3 +1,4 @@
+import 'package:easy_sign/widgets/xml/intervention_form.dart';
 import 'package:flutter/material.dart';
 
 class Page2 extends StatelessWidget {
@@ -9,7 +10,7 @@ class Page2 extends StatelessWidget {
       backgroundColor: Colors.blue,
       body: SafeArea(
         child: Container(
-          child: Text('PAGE 2'),
+          child: InterventionForm(),
         ),
       ),
     );
