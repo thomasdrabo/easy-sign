@@ -6,8 +6,9 @@ class UI_rounded_icon_button extends StatelessWidget {
   final String title;
   final Function() onPressed;
   final String icon;
+  final double? fontSize;
   const UI_rounded_icon_button(
-      {Key? key, required this.title, required this.onPressed, required this.icon})
+      {Key? key, required this.title, required this.onPressed, required this.icon, this.fontSize})
       : super(key: key);
 
   @override
@@ -47,7 +48,7 @@ class UI_rounded_icon_button extends StatelessWidget {
                   textStyle: TextStyle(
                     fontWeight: FontWeight.w600,
                     color: Colors.black,
-                    fontSize: 16,
+                    fontSize: fontSize ?? 16,
                   ),
                 ),
                 textAlign: TextAlign.center,
