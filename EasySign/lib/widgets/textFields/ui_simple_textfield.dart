@@ -7,6 +7,7 @@ class UI_simple_textfield extends StatelessWidget {
   final TextEditingController controller; // variable qui stock l'input du user
   final TextInputType? keyboardType; // variable qui choisie le type de clavier utilisé
   final String labelText; // variable qui contient le text affiché lorsque l'input est vide
+  final Color? labelTextColor; // variable qui choisie la couleur du labelText par defaut
   final Color? borderColor; // variable qui choisie la couleur de bordure par defaut
   final Color? focusBorderColor; // variable qui choisie la couleur de bordure par quand on saisie du text
   final int? maxLines; // variable qui choisie le nombre maximum de lignes
@@ -18,6 +19,7 @@ class UI_simple_textfield extends StatelessWidget {
     required this.controller,
     this.keyboardType,
     required this.labelText, 
+    this.labelTextColor, 
     this.borderColor,
     this.focusBorderColor,
     this.maxLines,
@@ -58,7 +60,7 @@ class UI_simple_textfield extends StatelessWidget {
         floatingLabelStyle: GoogleFonts.montserrat(
         textStyle: TextStyle(
           fontWeight: FontWeight.w400,
-          color: Colors.black,
+          color: labelTextColor == null ? Colors.black : labelTextColor!,
           fontSize: 15,
         ),
       ),
