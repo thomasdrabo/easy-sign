@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class IntervenantsList extends StatefulWidget {
   final Function updateIntervenant;
@@ -37,7 +38,18 @@ class _IntervenantsListState extends State<IntervenantsList> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Liste des intervenants'),
+         backgroundColor: Colors.white,
+        iconTheme: IconThemeData(color: Colors.black),
+        title: Text(
+          "Liste des intervenants",
+          style: GoogleFonts.montserrat(
+            textStyle: TextStyle(
+              fontWeight: FontWeight.w500,
+              color: Colors.black,
+              fontSize: 20,
+            ),
+          ),
+        ),
       ),
       body: SafeArea(
         child: Padding(

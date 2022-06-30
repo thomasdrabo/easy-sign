@@ -1,4 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:easy_sign/pages/accueil.dart';
+import 'package:easy_sign/pages/home.dart';
 import 'package:easy_sign/pages/page4.dart';
 import 'package:easy_sign/widgets/buttons/ui_gradient_button.dart';
 import 'package:easy_sign/widgets/xml/intervenantsList.dart';
@@ -86,162 +88,163 @@ class InterventionFormState extends State<InterventionForm> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Padding(
-          padding: const EdgeInsets.all(25.0),
-          child: Column(children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Text(
-                  "Nouvelle fiche d'intervention",
-                  style: GoogleFonts.montserrat(
-                    textStyle: const TextStyle(
-                      fontWeight: FontWeight.w500,
-                      color: Colors.black,
-                      fontSize: 22,
-                    ),
-                  ),
-                ),
-              ],
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        iconTheme: IconThemeData(color: Colors.black),
+        title: Text(
+          "Nouvelle fiche d'intervention",
+          style: GoogleFonts.montserrat(
+            textStyle: TextStyle(
+              fontWeight: FontWeight.w500,
+              color: Colors.black,
+              fontSize: 20,
             ),
-            Padding(
-                padding: const EdgeInsets.only(top: 16.0),
-                child: Visibility(
-                    visible: errorMessage0 != '',
-                    child: Text(
-                      errorMessage0,
-                      style: const TextStyle(color: Colors.red),
-                    ))),
-            const SizedBox(height: 15),
-            Container(height: 50, child: UI_simple_textfield(focusBorderColor: Colors.white, controller: globalInterventionNameController, labelText: "Nom de l'intervention", labelTextColor: Colors.white)),
-            const SizedBox(height: 15),
-            Text("INTERVENTIONS", style: TextStyle(color: Colors.white, fontSize: 20)),
-            Container(
-                margin: EdgeInsets.all(25),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    showWidget
-                        ? Column(
+          ),
+        ),
+      ),
+      body: SafeArea(
+        child: Padding(
+            padding: const EdgeInsets.all(25.0),
+            child: Column(children: [
+              Padding(
+                  padding: const EdgeInsets.only(top: 16.0),
+                  child: Visibility(
+                      visible: errorMessage0 != '',
+                      child: Text(
+                        errorMessage0,
+                        style: const TextStyle(color: Colors.red),
+                      ))),
+              const SizedBox(height: 15),
+              Container(height: 50, child: UI_simple_textfield(focusBorderColor: Colors.black, controller: globalInterventionNameController, labelText: "Nom de l'intervention", labelTextColor: Colors.black)),
+              const SizedBox(height: 15),
+              Text("INTERVENTIONS", style: TextStyle(color: Colors.black, fontSize: 20)),
+              Container(
+                  margin: EdgeInsets.all(25),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      showWidget
+                          ? Column(
 
-                            //physics: BouncingScrollPhysics(),
-                            children: [
-                                Row(
-                                  children: [
-                                    Text(
-                                      "Intervention numéro " + interventionNumber.toString() + ' :',
-                                      style: GoogleFonts.montserrat(),
-                                    ),
-                                  ],
-                                ),
-                                const SizedBox(height: 15),
-                                Container(height: 50, child: UI_simple_textfield(focusBorderColor: Colors.white, controller: interventionNameController, labelText: "Nom de l'intervention", labelTextColor: Colors.white)),
-                                const SizedBox(height: 15),
-                                InkWell(
-                                  onTap: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => IntervenantsList(updateIntervenant: _updateIntervenant),
+                              //physics: BouncingScrollPhysics(),
+                              children: [
+                                  Row(
+                                    children: [
+                                      Text(
+                                        "Intervention numéro " + interventionNumber.toString() + ' :',
+                                        style: GoogleFonts.montserrat(),
                                       ),
-                                    );
-                                  },
-                                  child: Text(
-                                    intervenant['name'] == '' ? 'Choisissez un intervenant' : intervenant['name'],
-                                    style: TextStyle(decoration: TextDecoration.underline),
+                                    ],
                                   ),
-                                ),
-                                const SizedBox(height: 15),
-                                Container(height: 50, child: UI_simple_textfield(focusBorderColor: Colors.white, controller: posteController, labelText: "Poste", labelTextColor: Colors.white)),
-                                const SizedBox(height: 15),
-                                Padding(
-                                    padding: const EdgeInsets.only(top: 16.0),
-                                    child: Visibility(
-                                        visible: errorMessage != '',
-                                        child: Text(
-                                          errorMessage,
-                                          style: const TextStyle(color: Colors.red),
-                                        ))),
-                                Text('Etape numéro ' + etapeNumber.toString() + ' :'),
-                                const SizedBox(height: 15),
-                                Container(height: 50, child: UI_simple_textfield(focusBorderColor: Colors.white, controller: etapeController, labelText: "Nom de l'étape", labelTextColor: Colors.white)),
-                                Padding(
-                                    padding: const EdgeInsets.only(top: 16.0),
-                                    child: Visibility(
-                                        visible: errorMessage2 != '',
-                                        child: Text(
-                                          errorMessage2,
-                                          style: const TextStyle(color: Colors.red),
-                                        ))),
-                                Padding(
-                                  padding: const EdgeInsets.symmetric(vertical: 8.0),
-                                  child: UI_gradient_button(
-                                    onPressed: () {
-                                      setState(() {
-                                        if (!etapeController.text.contains(new RegExp(r'[A-Z, a-z]'))) {
-                                          errorMessage2 = "Merci d'entrer un nom à l'étape.";
-                                        } else {
-                                          errorMessage2 = "";
-                                          etapes.add(Etape(etapeController.text));
-                                          etapeController.clear();
-                                          etapeNumber++;
-                                        }
-                                      });
+                                  const SizedBox(height: 15),
+                                  Container(height: 50, child: UI_simple_textfield(focusBorderColor: Colors.black, controller: interventionNameController, labelText: "Nom de l'intervention", labelTextColor: Colors.black)),
+                                  const SizedBox(height: 15),
+                                  InkWell(
+                                    onTap: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => IntervenantsList(updateIntervenant: _updateIntervenant),
+                                        ),
+                                      );
                                     },
-                                    title: "Valider l'étape",
+                                    child: Text(
+                                      intervenant['name'] == '' ? 'Choisissez un intervenant' : intervenant['name'],
+                                      style: TextStyle(decoration: TextDecoration.underline),
+                                    ),
                                   ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(bottom: 8.0),
-                                  child: UI_gradient_button(
-                                    onPressed: () {
-                                      setState(() {
-                                        if (!interventionNameController.text.contains(new RegExp(r'[A-Z, a-z]')) || intervenant['name'] == '' || !posteController.text.contains(new RegExp(r'[A-Z, a-z]'))) {
-                                          errorMessage = "Merci de remplir tous les champs.";
-                                        } else {
-                                          errorMessage = "";
-                                          if (etapes.length >= 1) {
-                                            _sendIntervention(interventionNameController.text, intervenant['name'], posteController.text, intervenant['uid']);
-                                            interventionNameController.clear();
-                                            intervenant = {'name': ''};
-                                            posteController.clear();
-                                            etapeNumber = 1;
-                                            etapeController.clear();
-                                            interventionNumber++;
+                                  const SizedBox(height: 15),
+                                  Container(height: 50, child: UI_simple_textfield(focusBorderColor: Colors.black, controller: posteController, labelText: "Poste", labelTextColor: Colors.black)),
+                                  const SizedBox(height: 15),
+                                  Padding(
+                                      padding: const EdgeInsets.only(top: 16.0),
+                                      child: Visibility(
+                                          visible: errorMessage != '',
+                                          child: Text(
+                                            errorMessage,
+                                            style: const TextStyle(color: Colors.red),
+                                          ))),
+                                  Text('Etape numéro ' + etapeNumber.toString() + ' :'),
+                                  const SizedBox(height: 15),
+                                  Container(height: 50, child: UI_simple_textfield(focusBorderColor: Colors.black, controller: etapeController, labelText: "Nom de l'étape", labelTextColor: Colors.black)),
+                                  Padding(
+                                      padding: const EdgeInsets.only(top: 16.0),
+                                      child: Visibility(
+                                          visible: errorMessage2 != '',
+                                          child: Text(
+                                            errorMessage2,
+                                            style: const TextStyle(color: Colors.red),
+                                          ))),
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(vertical: 8.0),
+                                    child: UI_gradient_button(
+                                      onPressed: () {
+                                        setState(() {
+                                          if (!etapeController.text.contains(new RegExp(r'[A-Z, a-z]'))) {
+                                            errorMessage2 = "Merci d'entrer un nom à l'étape.";
                                           } else {
-                                            errorMessage2 = "Merci de rentrer au moins une étape.";
+                                            errorMessage2 = "";
+                                            etapes.add(Etape(etapeController.text));
+                                            etapeController.clear();
+                                            etapeNumber++;
                                           }
-                                        }
-                                      });
-                                    },
-                                    title: "Valider l'intervention",
+                                        });
+                                      },
+                                      title: "Valider l'étape",
+                                    ),
                                   ),
-                                )
-                              ])
-                        : Container(),
-                    UI_rounded_icon_button(
-                      fontSize: 13,
-                      title: showWidget ? "Générer la fiche d'intervention" : "Ajouter",
-                      icon: "assets/icons/plus.svg",
-                      onPressed: () {
-                        setState(() {
-                          if (!showWidget) {
-                            showWidget = true;
-                          } else {
-                            if (!globalInterventionNameController.text.contains(new RegExp(r'[A-Z, a-z]'))) {
-                              errorMessage0 = "Merci d'entrer un nom à votre fiche d'intervention.";
+                                  Padding(
+                                    padding: const EdgeInsets.only(bottom: 8.0),
+                                    child: UI_gradient_button(
+                                      onPressed: () {
+                                        setState(() {
+                                          if (!interventionNameController.text.contains(new RegExp(r'[A-Z, a-z]')) || intervenant['name'] == '' || !posteController.text.contains(new RegExp(r'[A-Z, a-z]'))) {
+                                            errorMessage = "Merci de remplir tous les champs.";
+                                          } else {
+                                            errorMessage = "";
+                                            if (etapes.length >= 1) {
+                                              _sendIntervention(interventionNameController.text, intervenant['name'], posteController.text, intervenant['uid']);
+                                              interventionNameController.clear();
+                                              intervenant = {'name': ''};
+                                              posteController.clear();
+                                              etapeNumber = 1;
+                                              etapeController.clear();
+                                              interventionNumber++;
+                                            } else {
+                                              errorMessage2 = "Merci de rentrer au moins une étape.";
+                                            }
+                                          }
+                                        });
+                                      },
+                                      title: "Valider l'intervention",
+                                    ),
+                                  )
+                                ])
+                          : Container(),
+                      UI_rounded_icon_button(
+                        fontSize: 13,
+                        title: showWidget ? "Générer la fiche d'intervention" : "Ajouter",
+                        icon: "assets/icons/plus.svg",
+                        onPressed: () {
+                          setState(() {
+                            if (!showWidget) {
+                              showWidget = true;
                             } else {
-                              createXML(auth.currentUser!.uid, globalInterventionNameController.text, interventions);
+                              if (!globalInterventionNameController.text.contains(new RegExp(r'[A-Z, a-z]'))) {
+                                errorMessage0 = "Merci d'entrer un nom à votre fiche d'intervention.";
+                              } else {
+                                createXML(auth.currentUser!.uid, globalInterventionNameController.text, interventions);
+                              }
                             }
-                          }
-                        });
-                      },
-                    ),
-                  ],
-                )),
-          ])),
+                          });
+                        },
+                      ),
+                    ],
+                  )),
+            ])),
+      ),
     );
   }
 
@@ -295,22 +298,23 @@ class InterventionFormState extends State<InterventionForm> {
             builder.element("poste", isSelfClosing: false, nest: () {
               builder.text(x.poste);
             });
-            var j = 0;
-            for (var y in x.etapes) {
-              builder.element("etape", isSelfClosing: false, nest: () {
-                builder.attribute("id", j);
-                builder.element("nom", isSelfClosing: false, nest: () {
-                  builder.text(y.name);
+            builder.element("etapes", isSelfClosing: false, nest: () {
+              var j = 0;
+              for (var y in x.etapes) {
+                builder.element("etape", isSelfClosing: false, nest: () {
+                  builder.attribute("id", j);
+                  builder.element("nom", isSelfClosing: false, nest: () {
+                    builder.text(y.name);
+                  });
+                  builder.element("etat", isSelfClosing: false, nest: () {
+                    builder.text(y.etat);
+                  });
                 });
-                builder.element("etat", isSelfClosing: false, nest: () {
-                  builder.text(y.etat);
-                });
-              });
-              j++;
-            }
-            builder.element("signature", isSelfClosing: false);
+                j++;
+              }
+              builder.element("signature", isSelfClosing: false);
+            });
           });
-
           i++;
         }
       });
@@ -337,7 +341,10 @@ class InterventionFormState extends State<InterventionForm> {
       actions: <Widget>[
         new FlatButton(
           onPressed: () {
-            Navigator.of(context).pop();
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => Home()),
+            );
           },
           textColor: Theme.of(context).primaryColor,
           child: const Text('Terminer'),

@@ -1,4 +1,7 @@
+import 'package:easy_sign/services/authHelpers/firebase-auth-helper.dart';
+import 'package:easy_sign/widgets/buttons/ui_gradient_button.dart';
 import 'package:easy_sign/widgets/xml/intervention_form.dart';
+import 'package:easy_sign/wrapper.dart';
 import 'package:flutter/material.dart';
 
 class Page2 extends StatelessWidget {
@@ -10,7 +13,17 @@ class Page2 extends StatelessWidget {
       backgroundColor: Colors.blue,
       body: SafeArea(
         child: Container(
-          child: InterventionForm(),
+          child: Center(
+                child: UI_gradient_button(
+                    title: 'LogOut',
+                    onPressed: () {
+                      FirebaseAuthHelper().logout();
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(builder: (context) => Wrapper()),
+                      );
+                    }),
+              ),
         ),
       ),
     );
