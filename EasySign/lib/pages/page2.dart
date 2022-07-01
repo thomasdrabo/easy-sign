@@ -16,8 +16,8 @@ class Page2 extends StatelessWidget {
           child: Center(
                 child: UI_gradient_button(
                     title: 'LogOut',
-                    onPressed: () {
-                      FirebaseAuthHelper().logout();
+                    onPressed: () async {
+                      await FirebaseAuthHelper().logout();
                       Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(builder: (context) => Wrapper()),
