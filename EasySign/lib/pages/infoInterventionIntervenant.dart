@@ -1,5 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:easy_sign/pages/scanQrCode.dart';
 import 'package:easy_sign/widgets/buttons/ui_gradient_button.dart';
+import 'package:easy_sign/widgets/qrCode/qr_code.dart';
+import 'package:easy_sign/widgets/qrCode/qr_scanner.dart';
 import 'package:easy_sign/widgets/xml/intervention_form.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:xml/xml.dart';
@@ -12,12 +17,27 @@ class InfoInterventionIntervenant extends StatefulWidget {
   State<InfoInterventionIntervenant> createState() => _InfoInterventionIntervenantState();
 }
 
+final firestoreInstance = FirebaseFirestore.instance;
+final FirebaseAuth auth = FirebaseAuth.instance;
+
 class _InfoInterventionIntervenantState extends State<InfoInterventionIntervenant> {
   Map intervention = {};
   _getIntervention() {
     firestoreInstance.collection('fichesInterventions').doc(widget.interventionId).get().then((inter) {
       setState(() {
         intervention = inter.data() as Map;
+      });
+    }).whenComplete(() {
+      _getSuperviseurInfo();
+    });
+  }
+
+  var superviseur;
+  _getSuperviseurInfo() {
+    var doc = XmlDocument.parse(intervention['xmlFile']);
+    firestoreInstance.collection('users').doc(doc.getElement('document')!.getElement('parametres')!.getElement('identifiant-du-superviseur')!.innerText).get().then((superV) {
+      setState(() {
+        superviseur = superV.data();
       });
     });
   }
@@ -53,14 +73,18 @@ class _InfoInterventionIntervenantState extends State<InfoInterventionIntervenan
             itemCount: int.parse(XmlDocument.parse(intervention['xmlFile']).getElement('document')!.getElement('parametres')!.getElement('nombre-intervention')!.innerText),
             itemBuilder: (BuildContext ctxt, int index) {
               List interventionsName = [];
+              List etapeState = [];
               var interventions = XmlDocument.parse(intervention['xmlFile']).getElement('document')!.getElement('interventions')!.childElements;
               for (var element in interventions) {
                 var etapes = element.getElement('etapes')!.childElements;
                 List etapesInfo = [];
-                for (var i = 0; i < etapes.length - 1; i++) {
+                List etapesState = [];
+                for (var i = 0; i < etapes.length; i++) {
                   etapesInfo.add([etapes.elementAt(i).getElement('nom')!.innerText, etapes.elementAt(i).getElement('etat')!.innerText]);
+                  etapesState.add(etapes.elementAt(i).getElement('etat')!.innerText);
                 }
                 interventionsName.add([element.getElement('nom')!.innerText, etapesInfo, element.getElement('id-intervenant')!.innerText]);
+                etapeState.add(etapesState);
               }
               return Visibility(
                 visible: interventionsName[index][2] == auth.currentUser!.uid,
@@ -88,7 +112,9 @@ class _InfoInterventionIntervenantState extends State<InfoInterventionIntervenan
                           child: ListView.builder(
                               itemCount: interventionsName[index][1].length,
                               itemBuilder: (BuildContext ctxt, int index2) {
+                                List<bool> showButton = [];
                                 bool checked = interventionsName[index][1][index2][1] == 'true';
+
                                 return Padding(
                                   padding: const EdgeInsets.all(8.0),
                                   child: Row(
@@ -100,7 +126,7 @@ class _InfoInterventionIntervenantState extends State<InfoInterventionIntervenan
                                           var document = XmlDocument.parse(intervention['xmlFile']);
                                           for (var i in document.getElement('document')!.getElement('interventions')!.childElements) {
                                             if (i.getAttributeNode('id')!.value == index.toString()) {
-                                              for (var j = 0; j < i.getElement('etapes')!.childElements.length - 1; j++) {
+                                              for (var j = 0; j < i.getElement('etapes')!.childElements.length ; j++) {
                                                 if (i.getElement('etapes')!.childElements.elementAt(j).getAttributeNode('id')!.value == index2.toString()) {
                                                   i.getElement('etapes')!.childElements.elementAt(j).getElement('etat')!.innerText = checked ? 'false' : 'true';
                                                   await firestoreInstance.collection('fichesInterventions').doc(widget.interventionId).update({'xmlFile': document.toXmlString()}).whenComplete(() {
@@ -122,20 +148,30 @@ class _InfoInterventionIntervenantState extends State<InfoInterventionIntervenan
                                 );
                               }),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 8.0),
-                          child: InkWell(
-                            onTap: () {},
-                            child: Container(
-                                height: 30,
-                                width: MediaQuery.of(context).size.width / 2,
-                                decoration: BoxDecoration(
-                                  border: Border.all(
-                                      color: const Color.fromRGBO(13, 66, 126, 0.2), // variable qui choisie la couleur de bordure par quand on saisie du text
-                                      width: 1.5),
-                                  borderRadius: BorderRadius.circular(3),
-                                ),
-                                child: Center(child: Text("Signer l'intervention"))),
+                        Visibility(
+                          visible: !etapeState[index].contains('false'),
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 8.0),
+                            child: InkWell(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => ScanQrCode(idDocument: XmlDocument.parse(intervention['xmlFile']).getElement('document')!.getElement('parametres')!.getElement('identifiant-du-document')!.innerText, idIntervention: index.toString(), documentXml: intervention['xmlFile'], superviseur: superviseur),
+                                  ),
+                                );
+                              },
+                              child: Container(
+                                  height: 30,
+                                  width: MediaQuery.of(context).size.width / 2,
+                                  decoration: BoxDecoration(
+                                    border: Border.all(
+                                        color: const Color.fromRGBO(13, 66, 126, 0.2), // variable qui choisie la couleur de bordure par quand on saisie du text
+                                        width: 1.5),
+                                    borderRadius: BorderRadius.circular(3),
+                                  ),
+                                  child: Center(child: Text("Signer l'intervention"))),
+                            ),
                           ),
                         ),
                       ],

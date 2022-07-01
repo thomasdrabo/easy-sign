@@ -41,7 +41,7 @@ class _AccueilState extends State<Accueil> {
       
       for (var fiche in fiches.docs) {
         setState(() {
-          fichesInter.add(fiche.data());
+          fichesInter.add([fiche.data(), fiche.id]);
 
         });
       }
@@ -287,7 +287,7 @@ class _AccueilState extends State<Accueil> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => InfoIntervention(intervention: fichesInter[index]),
+                            builder: (context) => InfoIntervention(interventionId: fichesInter[index][1]),
                           ),
                         );
                       },
@@ -296,7 +296,7 @@ class _AccueilState extends State<Accueil> {
                         decoration: BoxDecoration(borderRadius: BorderRadius.circular(3.0), border: Border.all(color: const Color.fromRGBO(13, 66, 126, 0.2), width: 1.5)),
                         child: Center(
                           child: Text(
-                            XmlDocument.parse(fichesInter[index]['xmlFile']).getElement('document')!.getElement('parametres')!.getElement('nom-intervention')!.innerText,
+                            XmlDocument.parse(fichesInter[index][0]['xmlFile']).getElement('document')!.getElement('parametres')!.getElement('nom-intervention')!.innerText,
                             style: TextStyle(color: Colors.black),
                           ),
                         ),

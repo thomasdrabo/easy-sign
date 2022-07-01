@@ -14,14 +14,14 @@ class QrCodeWidget extends StatefulWidget {
 class _QrCodeWidgetState extends State<QrCodeWidget> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.blue,
-      body: SafeArea(
-        child: Container(
+    return SafeArea(
+      child: Container(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16.0),
           child: QrImage(
             data: widget.data,
             version: QrVersions.auto,
-            size: 200.0,
+            size: MediaQuery.of(context).size.width,
           ),
         ),
       ),

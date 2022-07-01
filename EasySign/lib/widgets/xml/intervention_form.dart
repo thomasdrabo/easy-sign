@@ -312,8 +312,9 @@ class InterventionFormState extends State<InterventionForm> {
                 });
                 j++;
               }
-              builder.element("signature", isSelfClosing: false);
+              
             });
+            builder.element("signature", isSelfClosing: false);
           });
           i++;
         }
