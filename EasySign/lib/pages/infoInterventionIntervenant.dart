@@ -74,8 +74,11 @@ class _InfoInterventionIntervenantState extends State<InfoInterventionIntervenan
             itemBuilder: (BuildContext ctxt, int index) {
               List interventionsName = [];
               List etapeState = [];
+              var sign = null;
               var interventions = XmlDocument.parse(intervention['xmlFile']).getElement('document')!.getElement('interventions')!.childElements;
               for (var element in interventions) {
+                
+                sign = element.getElement('signature')?.innerText;
                 var etapes = element.getElement('etapes')!.childElements;
                 List etapesInfo = [];
                 List etapesState = [];
@@ -126,7 +129,7 @@ class _InfoInterventionIntervenantState extends State<InfoInterventionIntervenan
                                           var document = XmlDocument.parse(intervention['xmlFile']);
                                           for (var i in document.getElement('document')!.getElement('interventions')!.childElements) {
                                             if (i.getAttributeNode('id')!.value == index.toString()) {
-                                              for (var j = 0; j < i.getElement('etapes')!.childElements.length ; j++) {
+                                              for (var j = 0; j < i.getElement('etapes')!.childElements.length; j++) {
                                                 if (i.getElement('etapes')!.childElements.elementAt(j).getAttributeNode('id')!.value == index2.toString()) {
                                                   i.getElement('etapes')!.childElements.elementAt(j).getElement('etat')!.innerText = checked ? 'false' : 'true';
                                                   await firestoreInstance.collection('fichesInterventions').doc(widget.interventionId).update({'xmlFile': document.toXmlString()}).whenComplete(() {
@@ -154,23 +157,25 @@ class _InfoInterventionIntervenantState extends State<InfoInterventionIntervenan
                             padding: const EdgeInsets.symmetric(vertical: 8.0),
                             child: InkWell(
                               onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => ScanQrCode(idDocument: XmlDocument.parse(intervention['xmlFile']).getElement('document')!.getElement('parametres')!.getElement('identifiant-du-document')!.innerText, idIntervention: index.toString(), documentXml: intervention['xmlFile'], superviseur: superviseur),
-                                  ),
-                                );
+                                if (sign == '') {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => ScanQrCode(idDocument: XmlDocument.parse(intervention['xmlFile']).getElement('document')!.getElement('parametres')!.getElement('identifiant-du-document')!.innerText, idIntervention: index.toString(), documentXml: intervention['xmlFile'], superviseur: superviseur),
+                                    ),
+                                  );
+                                }
                               },
                               child: Container(
                                   height: 30,
-                                  width: MediaQuery.of(context).size.width / 2,
+                                  width: MediaQuery.of(context).size.width / 1.7,
                                   decoration: BoxDecoration(
                                     border: Border.all(
                                         color: const Color.fromRGBO(13, 66, 126, 0.2), // variable qui choisie la couleur de bordure par quand on saisie du text
                                         width: 1.5),
                                     borderRadius: BorderRadius.circular(3),
                                   ),
-                                  child: Center(child: Text("Signer l'intervention"))),
+                                  child: Center(child: Text(sign != '' ? "L'intervention est déja signée" : "Signer l'intervention"))),
                             ),
                           ),
                         ),
